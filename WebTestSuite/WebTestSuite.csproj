@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net35;net40;net45</TargetFrameworks>
+    <Version>0.0.0-alpha</Version>
+    <Description>A testing suite for testing UX functionality of web apps.</Description>
+    <Copyright>Copyright (c) 2018 Jason Gallagher</Copyright>
+    <RepositoryType>Git</RepositoryType>
+    <PackageReleaseNotes>Initial release, barebones selenium test suite.</PackageReleaseNotes>
+    <PackageTags>Selenium Web Test Suite UX Testing App Website Functionality QA Quality Assurance Browser UI</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+  </ItemGroup>
+
+</Project>
