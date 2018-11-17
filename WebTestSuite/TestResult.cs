@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebTestSuite.Exception;
+using WebTestSuite.Exceptions;
 
 namespace WebTestSuite
 {

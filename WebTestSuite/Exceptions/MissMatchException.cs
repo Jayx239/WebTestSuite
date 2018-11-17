@@ -1,4 +1,4 @@
-﻿namespace WebTestSuite.Exception
+﻿namespace WebTestSuite.Exceptions
 {
     public class MissMatchException : TestFailException
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using WebTestSuite.Exception;
+using WebTestSuite.Exceptions;
 
 namespace WebTestSuite.Test
 {
@@ -24,12 +24,19 @@ namespace WebTestSuite.Test
                     TestResult.Messages.Add("Test failed gracefully");
                 }
             }
-            catch (TestFailException exception)
+            catch (TestFailException failEx)
             {
                 TestResult.ExecutionEnd = DateTime.Now;
                 TestResult.Succeeded = false;
-                TestResult.Messages.Add(exception.Message);
-                TestResult.Exception = exception;
+                TestResult.Messages.Add(failEx.Message);
+                TestResult.Exception = failEx;
+            }
+            catch (Exception ex)
+            {
+                TestResult.ExecutionEnd = DateTime.Now;
+                TestResult.Succeeded = false;
+                TestResult.Messages.Add(ex.Message);
+                TestResult.Exception = new UnexpectedErrorException(ex.Message, ex);
             }
         }
         protected virtual bool TryTest()

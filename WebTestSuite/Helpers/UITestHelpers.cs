@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using WebTestSuite.Exception;
+using WebTestSuite.Exceptions;
 
 namespace WebTestSuite.Helpers
 {

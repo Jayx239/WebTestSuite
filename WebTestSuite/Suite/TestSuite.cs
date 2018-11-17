@@ -29,18 +29,17 @@ namespace WebTestSuite.Suite
         {
             SuiteDescription = new SuiteDescription();
             _summary = new TestSummary();
+            Tests = new List<ITest>();
         }
-        public TestSuite(ITestSummary summary)
+        public TestSuite(ITestSummary summary) : base()
         {
-            SuiteDescription = new SuiteDescription();
             _summary = summary;
         }
-        public TestSuite(SuiteDescription suiteDescription)
+        public TestSuite(SuiteDescription suiteDescription) : base()
         {
             SuiteDescription = suiteDescription;
-            _summary = new TestSummary();
         }
-        public TestSuite(ITestSummary summary, SuiteDescription suiteDescription)
+        public TestSuite(ITestSummary summary, SuiteDescription suiteDescription) : base()
         {
             SuiteDescription = suiteDescription;
             _summary = summary;
