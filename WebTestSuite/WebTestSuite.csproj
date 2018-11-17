@@ -9,6 +9,9 @@
     <PackageReleaseNotes>Initial release, barebones selenium test suite.</PackageReleaseNotes>
     <PackageTags>Selenium Web Test Suite UX Testing App Website Functionality QA Quality Assurance Browser UI</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/Jayx239/WebTestSuite/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jayx239/WebTestSuite/</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Jayx239/WebTestSuite/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
