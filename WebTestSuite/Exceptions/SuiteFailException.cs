@@ -3,7 +3,7 @@ namespace WebTestSuite.Exceptions
 {
     public class SuiteFailException : FailException
     {
-        public SuiteFailException() : base("Suit failed")
+        public SuiteFailException() : base()
         {
         }
 

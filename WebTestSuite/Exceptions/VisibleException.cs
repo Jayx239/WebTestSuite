@@ -2,7 +2,7 @@
 {
     public class VisibleException : FailException
     {
-        public VisibleException(): base("Item is not visible")
+        public VisibleException(): base()
         {
         }
 

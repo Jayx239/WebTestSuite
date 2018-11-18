@@ -4,6 +4,6 @@
     {
         public FailException() : base() { }
         public FailException(string message) : base(message) { }
-        public FailException(string message, System.Exception innerException) : base() { }
+        public FailException(string message, System.Exception innerException) : base(message, innerException) { }
     }
 }

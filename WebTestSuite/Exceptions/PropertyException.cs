@@ -2,7 +2,7 @@
 {
     public class PropertyException : FailException
     {
-        public PropertyException() : base("Property exception")
+        public PropertyException() : base()
         {
         }
 

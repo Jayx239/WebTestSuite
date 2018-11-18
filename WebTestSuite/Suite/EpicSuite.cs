@@ -25,6 +25,7 @@ namespace WebTestSuite.Suite
         public bool PrintSummaryOnComplete { get; set; }
         public void Execute()
         {
+            SetUp();
             foreach (TestSuite suite in Suites)
             {
                 try
@@ -40,6 +41,7 @@ namespace WebTestSuite.Suite
                             PrintPassFailSummary();
                             PrintSummaryString();
                         }
+                        CleanUp();
                         throw failEx;
                     }
                 }
@@ -50,9 +52,10 @@ namespace WebTestSuite.Suite
                 PrintPassFailSummary();
                 PrintSummaryString();
             }
+            CleanUp();
             if(BreakOnEnd)
             {
-                if (Suites.Exists(s => !s.Sucessful))
+                if (!Sucessful)
                     throw new SuiteFailException();
             }
         }
@@ -83,7 +86,7 @@ namespace WebTestSuite.Suite
             }
         }
 
-        public bool Sucessful => Suites.Exists(s=>!s.Sucessful);
+        public bool Sucessful => !Suites.Exists(s=>!s.Sucessful);
 
         public void PrintSummaryString()
         {
@@ -102,7 +105,17 @@ namespace WebTestSuite.Suite
 
         public void CleanUp()
         {
-            
+            foreach (var suite in Suites)
+            {
+                try
+                {
+                    suite.CleanUp();
+                }
+                catch (Exception e)
+                {
+                    // Do nothing right now
+                }
+            }
         }
 
         private bool _showStackTrace;

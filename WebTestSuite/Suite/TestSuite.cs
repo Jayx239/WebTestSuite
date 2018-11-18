@@ -35,22 +35,26 @@ namespace WebTestSuite.Suite
             Tests = new List<ITest>();
             BreakOnFail = false;
         }
-        public TestSuite(ITestSummary summary) : base()
+        public TestSuite(ITestSummary summary)
         {
             _summary = summary;
+            ShowStackTrace = true;
         }
-        public TestSuite(SuiteDescription suiteDescription) : base()
+        public TestSuite(SuiteDescription suiteDescription)
         {
             SuiteDescription = suiteDescription;
+            ShowStackTrace = true;
         }
-        public TestSuite(ITestSummary summary, SuiteDescription suiteDescription) : base()
+        public TestSuite(ITestSummary summary, SuiteDescription suiteDescription)
         {
             SuiteDescription = suiteDescription;
             _summary = summary;
+            ShowStackTrace = true;
         }
 
         public virtual void Execute()
         {
+            SetUp();
             foreach (ITest test in Tests)
             {
                 try
@@ -111,7 +115,7 @@ namespace WebTestSuite.Suite
 
         public bool ShowStackTrace { get { return _summary.ShowStackTrace; } set { _summary.ShowStackTrace = value; } }
 
-        public bool Sucessful => Tests.Any(t=>!t.TestResult.Succeeded);
+        public bool Sucessful => !Tests.Any(t=>!t.TestResult.Succeeded);
 
         public void PrintSummaryString()
         {

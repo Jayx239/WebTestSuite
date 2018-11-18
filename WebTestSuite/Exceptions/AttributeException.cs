@@ -4,7 +4,7 @@ namespace WebTestSuite.Exceptions
 {
     public class AttributeException : FailException
     {
-        public AttributeException() : base("Attribute exception")
+        public AttributeException() : base()
         {
         }
 

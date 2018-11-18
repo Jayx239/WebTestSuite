@@ -2,7 +2,7 @@
 {
     public class ExistsException : FailException
     {
-        public ExistsException() : base("Item does not exist")
+        public ExistsException() : base()
         {
         }
 
