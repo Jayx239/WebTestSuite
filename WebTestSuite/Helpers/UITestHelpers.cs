@@ -12,7 +12,7 @@ namespace WebTestSuite.Helpers
         public static void TestErrorMessage(IWebElement messageElement)
         {
             if (!messageElement.Displayed)
-                throw new TestFailException("Error message not displayed");
+                throw new FailException("Error message not displayed");
         }
         /// <summary>
         /// Tests if error message is displayed and text matches

@@ -1,6 +1,6 @@
 ﻿namespace WebTestSuite.Exceptions
 {
-    public class MissMatchException : TestFailException
+    public class MissMatchException : FailException
     {
         public MissMatchException(object expected, object actual):base("Expected: \""+ expected.ToString() + "\", Actual: \"" + actual.ToString() + "\"")
         {

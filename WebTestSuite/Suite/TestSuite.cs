@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using WebTestSuite.Exceptions;
 using WebTestSuite.Test;
 
 namespace WebTestSuite.Suite
 {
-    public class TestSuite : ITestSuite
+    public class TestSuite : ITestSuite, IStateConfiguration
     {
+        public bool BreakOnFail { get { return Tests.Exists(r => r.BreakOnFail); } set { foreach (ITest test in Tests) { test.BreakOnFail = value; } } }
         public SuiteDescription SuiteDescription { get; set; }
         public List<ITest> Tests { get; set; }
 
@@ -30,6 +33,7 @@ namespace WebTestSuite.Suite
             SuiteDescription = new SuiteDescription();
             _summary = new TestSummary();
             Tests = new List<ITest>();
+            BreakOnFail = false;
         }
         public TestSuite(ITestSummary summary) : base()
         {
@@ -49,7 +53,39 @@ namespace WebTestSuite.Suite
         {
             foreach (ITest test in Tests)
             {
-                test.Execute();
+                try
+                { 
+                    test.Execute();
+                }
+                catch(FailException failEx)
+                {
+                    if(test.BreakOnFail)
+                    {
+                        CleanUp();
+                        throw failEx;
+                    }
+                }
+            }
+            CleanUp();
+        }
+
+        public virtual void SetUp()
+        {
+
+        }
+
+        public virtual void CleanUp()
+        {
+            foreach(var test in Tests)
+            {
+                try
+                {
+                    test.CleanUp();
+                }
+                catch (Exception e)
+                {
+                    // Do nothing right now
+                }
             }
         }
 
@@ -74,6 +110,8 @@ namespace WebTestSuite.Suite
         }
 
         public bool ShowStackTrace { get { return _summary.ShowStackTrace; } set { _summary.ShowStackTrace = value; } }
+
+        public bool Sucessful => Tests.Any(t=>!t.TestResult.Succeeded);
 
         public void PrintSummaryString()
         {

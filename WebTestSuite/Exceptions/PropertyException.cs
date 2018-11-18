@@ -1,6 +1,6 @@
 ﻿namespace WebTestSuite.Exceptions
 {
-    public class PropertyException : TestFailException
+    public class PropertyException : FailException
     {
         public PropertyException() : base("Property exception")
         {

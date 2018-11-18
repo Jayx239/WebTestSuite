@@ -1,6 +1,6 @@
 ﻿namespace WebTestSuite.Exceptions
 {
-    public class ExistsException : TestFailException
+    public class ExistsException : FailException
     {
         public ExistsException() : base("Item does not exist")
         {
