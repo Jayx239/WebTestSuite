@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WebTestSuite.Exceptions;
 
@@ -21,7 +22,7 @@ namespace WebTestSuite.Suite
         /// </summary>
         public bool BreakOnEnd { get; set; }
         public List<ITestSuite> Suites { get; set; }
-        public bool ShowStackTrace { get { return _showStackTrace; } set { _showStackTrace = value; foreach (TestSuite suite in Suites) { suite.ShowStackTrace = value; } } }
+        public bool ShowStackTrace { get { return Suites.Any(s=> s.ShowStackTrace); } set { foreach (TestSuite suite in Suites) { suite.ShowStackTrace = value; } } }
         public bool PrintSummaryOnComplete { get; set; }
         public void Execute()
         {
@@ -36,23 +37,25 @@ namespace WebTestSuite.Suite
                 {
                     if (BreakOnFail)
                     {
+                        CleanUp();
                         if (PrintSummaryOnComplete)
                         {
                             PrintPassFailSummary();
                             PrintSummaryString();
                         }
-                        CleanUp();
+                        
                         throw failEx;
                     }
                 }
             }
 
+            CleanUp();
             if (PrintSummaryOnComplete)
             {
                 PrintPassFailSummary();
                 PrintSummaryString();
             }
-            CleanUp();
+            
             if(BreakOnEnd)
             {
                 if (!Sucessful)
@@ -117,7 +120,5 @@ namespace WebTestSuite.Suite
                 }
             }
         }
-
-        private bool _showStackTrace;
     }
 }

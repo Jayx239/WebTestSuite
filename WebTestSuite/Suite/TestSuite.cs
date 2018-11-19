@@ -18,8 +18,9 @@ namespace WebTestSuite.Suite
             get
             {
                 _summary.TestResults.Clear();
-                foreach (ITest test in Tests)
-                    _summary.TestResults.Add(test.TestResult);
+                if (Tests != null && Tests.Count > 0)
+                    foreach (ITest test in Tests)
+                        _summary.TestResults.Add(test.TestResult);
 
                 return _summary;
 
@@ -34,22 +35,20 @@ namespace WebTestSuite.Suite
             _summary = new TestSummary();
             Tests = new List<ITest>();
             BreakOnFail = false;
+            ShowStackTrace = true;
         }
-        public TestSuite(ITestSummary summary)
+        public TestSuite(ITestSummary summary) : base()
         {
             _summary = summary;
-            ShowStackTrace = true;
         }
-        public TestSuite(SuiteDescription suiteDescription)
+        public TestSuite(SuiteDescription suiteDescription) : base()
         {
             SuiteDescription = suiteDescription;
-            ShowStackTrace = true;
         }
-        public TestSuite(ITestSummary summary, SuiteDescription suiteDescription)
+        public TestSuite(ITestSummary summary, SuiteDescription suiteDescription) : base()
         {
             SuiteDescription = suiteDescription;
             _summary = summary;
-            ShowStackTrace = true;
         }
 
         public virtual void Execute()
@@ -58,12 +57,12 @@ namespace WebTestSuite.Suite
             foreach (ITest test in Tests)
             {
                 try
-                { 
+                {
                     test.Execute();
                 }
-                catch(FailException failEx)
+                catch (FailException failEx)
                 {
-                    if(test.BreakOnFail)
+                    if (test.BreakOnFail)
                     {
                         CleanUp();
                         throw failEx;
@@ -80,7 +79,7 @@ namespace WebTestSuite.Suite
 
         public virtual void CleanUp()
         {
-            foreach(var test in Tests)
+            foreach (var test in Tests)
             {
                 try
                 {
@@ -115,7 +114,7 @@ namespace WebTestSuite.Suite
 
         public bool ShowStackTrace { get { return _summary.ShowStackTrace; } set { _summary.ShowStackTrace = value; } }
 
-        public bool Sucessful => !Tests.Any(t=>!t.TestResult.Succeeded);
+        public bool Sucessful => !Tests.Any(t => !t.TestResult.Succeeded);
 
         public void PrintSummaryString()
         {

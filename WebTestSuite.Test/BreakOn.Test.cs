@@ -22,6 +22,7 @@ namespace WebSuiteTest.Test
             }
             catch (FailException failEx)
             {
+                epicSuite.CleanUp();
                 return;
             }
             Assert.IsTrue(false);
@@ -43,7 +44,6 @@ namespace WebSuiteTest.Test
             Assert.IsTrue(epicSuite.Suites[1].Tests[0].TestResult.Succeeded);
             Assert.IsTrue(epicSuite.Suites[1].Tests[1].TestResult.Executed);
             Assert.IsTrue(epicSuite.Suites[1].Tests[1].TestResult.Succeeded);
-            System.Console.Write("Complete");
         }
         [TestMethod]
         public void TestSuppressTest()
@@ -86,6 +86,7 @@ namespace WebSuiteTest.Test
             SampleEpicSuite epicSuite = new SampleEpicSuite();
             epicSuite.BreakOnFail = false;
             epicSuite.BreakOnEnd = true;
+            epicSuite.CleanUp();
             epicSuite.Suites = new List<ITestSuite>() { new SampleSuitePass() };
             epicSuite.Execute();
             Assert.IsTrue(epicSuite.Sucessful);

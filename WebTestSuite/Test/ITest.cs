@@ -1,6 +1,6 @@
 ﻿namespace WebTestSuite.Test
 {
-    public interface ITest : IBreakable, IStateConfiguration
+    public interface ITest : IBreakable, IStateConfiguration, ISuccessIndicator
     {
         ITestResult TestResult { get; set; }
         void Execute();

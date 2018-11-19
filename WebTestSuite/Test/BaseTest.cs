@@ -3,7 +3,7 @@ using WebTestSuite.Exceptions;
 
 namespace WebTestSuite.Test
 {
-    public class BaseTest : ITest, ISuccessIndicator
+    public class BaseTest : ITest
     {
         public bool BreakOnFail { get; set; }
 
