@@ -1,16 +1,17 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using NUnit.Framework;
 using WebSuiteTest.Test.SampleTestSuite;
 using WebTestSuite.Exceptions;
 using WebTestSuite.Suite;
 using WebTestSuite.Test.SampleTestSuite;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace WebSuiteTest.Test
 {
-    [TestClass]
+    [TestFixture]
     public class BreakOn
     {
-        [TestMethod]
+        [Test]
         public void TestThrowEpicSuite()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -28,7 +29,7 @@ namespace WebSuiteTest.Test
             Assert.IsTrue(false);
         }
 
-        [TestMethod]
+        [Test]
         public void TestSuppressSuite()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -45,7 +46,7 @@ namespace WebSuiteTest.Test
             Assert.IsTrue(epicSuite.Suites[1].Tests[1].TestResult.Executed);
             Assert.IsTrue(epicSuite.Suites[1].Tests[1].TestResult.Succeeded);
         }
-        [TestMethod]
+        [Test]
         public void TestSuppressTest()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -63,7 +64,7 @@ namespace WebSuiteTest.Test
             Assert.IsTrue(epicSuite.Suites[1].Tests[1].TestResult.Succeeded);
         }
 
-        [TestMethod]
+        [Test]
         public void BreakOnEndTest()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -80,7 +81,7 @@ namespace WebSuiteTest.Test
             }
             Assert.IsTrue(false);
         }
-        [TestMethod]
+        [Test]
         public void BreakOnEndSuccessfulTest()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -92,7 +93,7 @@ namespace WebSuiteTest.Test
             Assert.IsTrue(epicSuite.Sucessful);
             epicSuite.CleanUp();
         }
-        [TestMethod]
+        [Test]
         public void TestNoBreakOnFailTest()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();

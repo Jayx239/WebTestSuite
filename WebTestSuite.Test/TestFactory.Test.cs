@@ -1,12 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace WebTestSuite.Test
 {
-    [TestClass]
+    [TestFixture]
     public class TestFactory
     {
-        [TestMethod]
+        [Test]
         public void TestGetTestSummary()
         {
             WebTestSuite.TestFactory testFactory = new WebTestSuite.TestFactory();

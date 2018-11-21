@@ -1,19 +1,20 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace WebTestSuite.Test
 {
-    [TestClass]
+    [TestFixture]
     public class BaseTestTests
     {
-        [TestMethod]
+        [Test]
         public void SummaryConstructor()
         {
             ITestResult testResult = new TestResult();
             WebTestSuite.Test.BaseTest baseTest = new WebTestSuite.Test.BaseTest(testResult);
             Assert.AreEqual(testResult, baseTest.TestResult);
         }
-        [TestMethod]
+        [Test]
         public void TestSetUp()
         {
             WebTestSuite.Test.BaseTest baseTest = new WebTestSuite.Test.BaseTest();

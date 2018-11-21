@@ -1,12 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace WebTestSuite.Test
 {
-    [TestClass]
+    [TestFixture]
     public class SuiteDescription
     {
-        [TestMethod]
+        [Test]
         public void TestMethod1()
         {
             WebTestSuite.Suite.SuiteDescription suiteDescription = new WebTestSuite.Suite.SuiteDescription("Suite name", "Client");

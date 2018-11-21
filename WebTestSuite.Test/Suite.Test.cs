@@ -1,21 +1,22 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using WebSuiteTest.Test.SampleTestSuite;
 using WebTestSuite.Suite;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace WebTestSuite.Test
 {
-    [TestClass]
+    [TestFixture]
     public class Suite
     {
-        [TestMethod]
+        [Test]
         public void TestNameDescriptionConstructor()
         {
             //WebTestSuite.Suite.TestSuite testSuite = new WebTestSuite.Suite.TestSuite();
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestShowStackTrace()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -31,7 +32,7 @@ namespace WebTestSuite.Test
             Assert.IsFalse(sampleSuite.Tests[0].Sucessful);
             epicSuite.CleanUp();
         }
-        [TestMethod]
+        [Test]
         public void BreakOnFail()
         {
             SampleTestSuite.SampleSuitePass testSuite = new SampleTestSuite.SampleSuitePass();
@@ -41,7 +42,7 @@ namespace WebTestSuite.Test
             Assert.IsTrue(testSuite.BreakOnFail);
             testSuite.CleanUp();
         }
-        [TestMethod]
+        [Test]
         public void TestPrintSummaryString()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -51,7 +52,7 @@ namespace WebTestSuite.Test
             sampleSuite.PrintSummaryString();
             sampleSuite.CleanUp();
         }
-        [TestMethod]
+        [Test]
         public void TestPrintPassFailSummary()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
@@ -61,7 +62,7 @@ namespace WebTestSuite.Test
             sampleSuite.PrintPassFailSummary();
             sampleSuite.CleanUp();
         }
-        [TestMethod]
+        [Test]
         public void TestSuiteConstructors()
         {
             ITestSummary testSummary = new WebTestSuite.TestSummary();

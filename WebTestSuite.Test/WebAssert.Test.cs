@@ -1,14 +1,16 @@
 ﻿using Moq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using WebTestSuite.Exceptions;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace WebTestSuite.Test
 {
-    [TestClass]
+    [TestFixture]
     public class WebAssert
     {
-        [TestMethod]
+        [Test]
         public void TestMethod1()
         {
         }

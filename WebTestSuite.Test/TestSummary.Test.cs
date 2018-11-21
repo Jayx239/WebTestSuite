@@ -1,15 +1,16 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using WebSuiteTest.Test.SampleTestSuite;
 using WebTestSuite.Exceptions;
 using WebTestSuite.Test.SampleTestSuite;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace WebTestSuite.Test
 {
-    [TestClass]
+    [TestFixture]
     public class TestSummary
     {
-        [TestMethod]
+        [Test]
         public void TestPrintStackTrace()
         {
             SampleEpicSuite epicScuite = new SampleEpicSuite();
