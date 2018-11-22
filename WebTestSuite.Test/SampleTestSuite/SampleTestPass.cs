@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using WebTestSuite.Test;
 
 namespace WebSuiteTest.Test.SampleTestSuite
@@ -11,12 +12,13 @@ namespace WebSuiteTest.Test.SampleTestSuite
 
         protected override bool TryTest()
         {
+            Assert.IsFalse(base.TryTest());
             return true;
         }
         public override void CleanUp()
         {
-            _webDriver.Close();
-            _webDriver.Quit();
+            WebDriver.Close();
+            WebDriver.Quit();
         }
     }
 }

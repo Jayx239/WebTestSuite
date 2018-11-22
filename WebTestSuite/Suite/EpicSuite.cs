@@ -26,7 +26,7 @@ namespace WebTestSuite.Suite
         public bool PrintSummaryOnComplete { get; set; }
         public void Execute()
         {
-            SetUp();
+            TrySetUp();
             foreach (TestSuite suite in Suites)
             {
                 try
@@ -37,7 +37,7 @@ namespace WebTestSuite.Suite
                 {
                     if (BreakOnFail)
                     {
-                        CleanUp();
+                        TryCleanUp();
                         if (PrintSummaryOnComplete)
                         {
                             PrintPassFailSummary();
@@ -49,7 +49,7 @@ namespace WebTestSuite.Suite
                 }
             }
 
-            CleanUp();
+            TryCleanUp();
             if (PrintSummaryOnComplete)
             {
                 PrintPassFailSummary();
@@ -101,12 +101,22 @@ namespace WebTestSuite.Suite
             Console.WriteLine(PassFailSummaryString);
         }
 
-        public void SetUp()
+        public virtual void SetUp()
         {
             
         }
-
-        public void CleanUp()
+        private void TrySetUp()
+        {
+            try
+            {
+                SetUp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception on EpicSuite SetUp");
+            }
+        }
+        public virtual void CleanUp()
         {
             foreach (var suite in Suites)
             {
@@ -116,8 +126,19 @@ namespace WebTestSuite.Suite
                 }
                 catch (Exception e)
                 {
-                    // Do nothing right now
+                    Console.WriteLine("Exception on EpicSuite CleanUp");
                 }
+            }
+        }
+        private void TryCleanUp()
+        {
+            try
+            {
+                CleanUp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception on EpicSuite CleanUp");
             }
         }
     }

@@ -51,9 +51,9 @@ namespace WebTestSuite.Suite
             _summary = summary;
         }
 
-        public virtual void Execute()
+        public void Execute()
         {
-            SetUp();
+            TrySetUp();
             foreach (ITest test in Tests)
             {
                 try
@@ -64,34 +64,55 @@ namespace WebTestSuite.Suite
                 {
                     if (test.BreakOnFail)
                     {
-                        CleanUp();
+                        TryCleanUp();
                         throw failEx;
                     }
                 }
             }
-            CleanUp();
+            TryCleanUp();
         }
 
         public virtual void SetUp()
         {
 
         }
+        private void TrySetUp()
+        {
+            try
+            {
+                SetUp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception on TestSuite SetUp");
+            }
+        }
 
         public virtual void CleanUp()
         {
-            foreach (var test in Tests)
+            foreach(ITest test in Tests)
             {
                 try
                 {
                     test.CleanUp();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    // Do nothing right now
+                    Console.WriteLine("Exception on TestSuite CleanUp");
                 }
             }
         }
-
+        private void TryCleanUp()
+        {
+            try
+            {
+                CleanUp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception on TestSuite CleanUp");
+            }
+        }
         public string SummaryString
         {
             get

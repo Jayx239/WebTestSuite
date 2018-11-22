@@ -16,14 +16,38 @@ namespace WebTestSuite.Test
             
         }
 
+        private void TrySetUp()
+        {
+            try
+            {
+                SetUp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception on Test SetUp");
+            }
+        }
+
         public virtual void CleanUp()
         {
             
         }
 
+        private void TryCleanUp()
+        {
+            try
+            {
+                CleanUp();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Exception on Test CleanUp");
+            }
+        }
+
         public void Execute()
         {
-            SetUp();
+            TrySetUp();
             try
             {
                 TestResult.Succeeded = false;
@@ -49,7 +73,7 @@ namespace WebTestSuite.Test
                 TestResult.Executed = true;
                 if (BreakOnFail)
                 {
-                    CleanUp();
+                    TryCleanUp();
                     throw failEx;
                 }
                     
@@ -63,12 +87,12 @@ namespace WebTestSuite.Test
                 TestResult.Executed = true;
                 if (BreakOnFail)
                 {
-                    CleanUp();
+                    TryCleanUp();
                     throw TestResult.Exception;
                 }
             }
             TestResult.Executed = true;
-            CleanUp();
+            TryCleanUp();
         }
 
         protected virtual bool TryTest()

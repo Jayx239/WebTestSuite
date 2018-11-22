@@ -1,8 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
 using System.Collections.Generic;
 using WebSuiteTest.Test.SampleTestSuite;
 using WebTestSuite.Exceptions;
 using WebTestSuite.Suite;
+using WebTestSuite.Test;
 using WebTestSuite.Test.SampleTestSuite;
 
 namespace WebSuiteTest.Test
@@ -101,6 +104,43 @@ namespace WebSuiteTest.Test
             epicSuite.Suites[0].BreakOnFail = false;
             epicSuite.CleanUp();
 
+        }
+
+        [TestMethod]
+        public void EpicSuiteCleanUpException()
+        {
+            Mock<EpicSuite> epicSuiteMock = new Mock<EpicSuite>();
+            epicSuiteMock.Setup(s => s.CleanUp()).Throws(new Exception());
+            epicSuiteMock.Object.Execute();            
+        }
+
+        [TestMethod]
+        public void EpicSuiteSetUpException()
+        {
+            Mock<EpicSuite> epicSuiteMock = new Mock<EpicSuite>();
+            epicSuiteMock.Setup(s => s.SetUp()).Throws(new Exception());
+            epicSuiteMock.Object.Execute();
+        }
+        [TestMethod]
+        public void SuiteSetUpException()
+        {
+            TestSuite suite = new ExceptionSuite();
+            suite.Execute();
+        }
+        [TestMethod]
+        public void TestThrowException()
+        {
+            //Mock<BaseTest> testMock = new Mock<BaseTest>();
+            //testMock.Setup(s => s.Execute()).Throws(new FailException());
+            ExceptionTest testMock = new ExceptionTest();
+            testMock.BreakOnFail = true;
+            TestSuite testSuite = new TestSuite();
+            testSuite.Tests.Add(testMock);
+            testSuite.BreakOnFail = false;
+            testSuite.Execute();
+            testSuite.Summary.ShowStackTrace = true;
+            Assert.IsNotNull(testSuite.Summary.ToString());
+            Assert.IsTrue(testSuite.Summary.ToString() is String );
         }
     }
 }

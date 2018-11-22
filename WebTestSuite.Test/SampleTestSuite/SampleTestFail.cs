@@ -15,8 +15,8 @@ namespace WebSuiteTest.Test.SampleTestSuite
         }
         public override void CleanUp()
         {
-            _webDriver.Close();
-            _webDriver.Quit();
+            WebDriver.Close();
+            WebDriver.Quit();
         }
     }
 }

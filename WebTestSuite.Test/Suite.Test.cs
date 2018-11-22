@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium.Chrome;
 using WebSuiteTest.Test.SampleTestSuite;
 using WebTestSuite.Suite;
+using WebTestSuite.Test.SampleTestSuite;
 
 namespace WebTestSuite.Test
 {
@@ -78,6 +80,44 @@ namespace WebTestSuite.Test
 
             testSuite1.Summary = testSummary;
             Assert.AreEqual(testSummary, testSuite1.Summary);
+        }
+        [TestMethod]
+        public void TestSuiteException()
+        {
+            ExceptionTest test = new ExceptionTest();
+            test.Execute();
+            Assert.IsTrue(test.TestResult.Executed);
+            Assert.IsFalse(test.TestResult.Succeeded);
+            ExceptionTest test2 = new ExceptionTest();
+            try
+            {
+                test2.BreakOnFail = true;
+                test2.Execute();
+            }
+            catch(Exception e)
+            {
+                return;
+            }
+            Assert.IsTrue(false);
+        }
+
+        [TestMethod]
+        public void TestDefaultWebTestConstructor()
+        {
+            WebSuite webTest = new WebSuite();
+            Assert.IsNull(webTest.WebDriver);
+        }
+        [TestMethod]
+        public void TestDriverConstructor()
+        {
+            WebSuite webTestSuite = new WebSuite(new ChromeDriver());
+            Assert.IsNotNull(webTestSuite.WebDriver);
+            WebTest noDriverTest = new WebTest();
+            webTestSuite.AddTest(noDriverTest);
+            Assert.IsTrue(((WebTest)webTestSuite.Tests[0]).WebDriver == webTestSuite.WebDriver);
+            WebTest driverTest = new WebTest(new ChromeDriver());
+            webTestSuite.AddTest(driverTest);
+            Assert.AreNotEqual(driverTest, webTestSuite.WebDriver);
         }
 
     }
