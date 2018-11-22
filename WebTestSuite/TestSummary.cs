@@ -13,7 +13,7 @@ namespace WebTestSuite
             int index = 0;
             foreach(ITestResult testResult in TestResults)
             {
-                sb.Append(string.Format("Test {0}: \n\tSucceeded: {1}\n\tMessage: ", index++, testResult.Succeeded));
+                sb.Append(string.Format("Test {0}:\n\tExecuted: {1}\n\tSucceeded: {2}\n\tMessage: ", index++, testResult.Executed, testResult.Succeeded));
                 foreach (string message in testResult.Messages)
                     sb.Append("\n\t\t").Append(message);
                 sb.Append(string.Format("\n\tStart: {0}\n\tStop: {1}\n\tExecution Time: {2}\n", testResult.ExecutionStart, testResult.ExecutionEnd, testResult.ExecutionTime));
