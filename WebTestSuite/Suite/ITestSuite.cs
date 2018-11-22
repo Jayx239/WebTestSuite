@@ -3,7 +3,7 @@ using WebTestSuite.Test;
 
 namespace WebTestSuite.Suite
 {
-    public interface ITestSuite : ISummaryPrinter
+    public interface ITestSuite : ISummaryPrinter, IBreakable, IStateConfiguration, ISuccessIndicator
     {
         SuiteDescription SuiteDescription { get; set; }
         List<ITest> Tests { get; set; }
