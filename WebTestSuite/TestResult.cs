@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebTestSuite.Exception;
+using WebTestSuite.Exceptions;
 
 namespace WebTestSuite
 {
     public class TestResult : ITestResult
     {
+        public bool Executed { get; set; }
         public bool Succeeded { get; set; }
         public List<string> Messages { get; set; }
         public DateTime ExecutionStart { get; set; }
@@ -14,9 +15,11 @@ namespace WebTestSuite
         {
             get { return ExecutionEnd - ExecutionStart; }
         }
-        public TestFailException Exception { get; set; }
+        public FailException Exception { get; set; }
+
         public TestResult()
         {
+            Executed = false;
             Messages = new List<string>();
         }
     }

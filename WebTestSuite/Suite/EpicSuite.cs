@@ -1,25 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using WebTestSuite.Exceptions;
 
 namespace WebTestSuite.Suite
 {
-    public class EpicSuite : ISummaryPrinter
+    public class EpicSuite : ISummaryPrinter, IBreakable, IStateConfiguration, ISuccessIndicator
     {
 
         public EpicSuite()
         {
             Suites = new List<ITestSuite>();
+            PrintSummaryOnComplete = true;
+            BreakOnFail = false;
         }
 
+        public bool BreakOnFail { get; set; }
+        /// <summary>
+        /// Determines whether an exception should be thrown after all tests are ran if one or more suites failed
+        /// </summary>
+        public bool BreakOnEnd { get; set; }
         public List<ITestSuite> Suites { get; set; }
-        public bool ShowStackTrace { get { return _showStackTrace;  } set { _showStackTrace = value; foreach (TestSuite suite in Suites) { suite.ShowStackTrace = value; } } }
-        
+        public bool ShowStackTrace { get { return Suites.Any(s=> s.ShowStackTrace); } set { foreach (TestSuite suite in Suites) { suite.ShowStackTrace = value; } } }
+        public bool PrintSummaryOnComplete { get; set; }
         public void Execute()
         {
-            foreach(TestSuite suite in Suites)
+            TrySetUp();
+            foreach (TestSuite suite in Suites)
             {
-                suite.Execute();
+                try
+                {
+                    suite.Execute();
+                }
+                catch (FailException failEx)
+                {
+                    if (BreakOnFail)
+                    {
+                        TryCleanUp();
+                        if (PrintSummaryOnComplete)
+                        {
+                            PrintPassFailSummary();
+                            PrintSummaryString();
+                        }
+                        
+                        throw failEx;
+                    }
+                }
+            }
+
+            TryCleanUp();
+            if (PrintSummaryOnComplete)
+            {
+                PrintPassFailSummary();
+                PrintSummaryString();
+            }
+            
+            if(BreakOnEnd)
+            {
+                if (!Sucessful)
+                    throw new SuiteFailException();
             }
         }
 
@@ -49,6 +89,8 @@ namespace WebTestSuite.Suite
             }
         }
 
+        public bool Sucessful => !Suites.Exists(s=>!s.Sucessful);
+
         public void PrintSummaryString()
         {
             Console.WriteLine(SummaryString);
@@ -59,6 +101,45 @@ namespace WebTestSuite.Suite
             Console.WriteLine(PassFailSummaryString);
         }
 
-        private bool _showStackTrace;
+        public virtual void SetUp()
+        {
+            
+        }
+        private void TrySetUp()
+        {
+            try
+            {
+                SetUp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception on EpicSuite SetUp");
+            }
+        }
+        public virtual void CleanUp()
+        {
+            foreach (var suite in Suites)
+            {
+                try
+                {
+                    suite.CleanUp();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception on EpicSuite CleanUp");
+                }
+            }
+        }
+        private void TryCleanUp()
+        {
+            try
+            {
+                CleanUp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception on EpicSuite CleanUp");
+            }
+        }
     }
 }
