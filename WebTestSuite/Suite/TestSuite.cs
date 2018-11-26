@@ -7,12 +7,25 @@ using WebTestSuite.Test;
 
 namespace WebTestSuite.Suite
 {
+    /// <summary>
+    /// Base test suite containing tests
+    /// </summary>
     public class TestSuite : ITestSuite, IStateConfiguration
     {
+        /// <inheritdoc />
         public bool BreakOnFail { get { return Tests.Exists(r => r.BreakOnFail); } set { foreach (ITest test in Tests) { test.BreakOnFail = value; } } }
+        /// <summary>
+        /// Description for Suite
+        /// </summary>
         public SuiteDescription SuiteDescription { get; set; }
+        /// <summary>
+        /// Tests to be run in suite
+        /// </summary>
         public List<ITest> Tests { get; set; }
 
+        /// <summary>
+        /// Test summary for suite
+        /// </summary>
         public ITestSummary Summary
         {
             get
@@ -51,6 +64,10 @@ namespace WebTestSuite.Suite
             _summary = summary;
         }
 
+        /// <summary>
+        /// Executes all tests in the suite
+        /// </summary>
+        /// <exception cref="FailException">Thrown if a test fails</exception>
         public void Execute()
         {
             TrySetUp();
@@ -72,10 +89,14 @@ namespace WebTestSuite.Suite
             TryCleanUp();
         }
 
+        /// <summary>
+        /// Setup to be run before suite executes
+        /// </summary>
         public virtual void SetUp()
         {
 
         }
+        
         private void TrySetUp()
         {
             try
@@ -88,6 +109,9 @@ namespace WebTestSuite.Suite
             }
         }
 
+        /// <summary>
+        /// Cleanup to be run after all tests in suite execute
+        /// </summary>
         public virtual void CleanUp()
         {
             foreach(ITest test in Tests)
@@ -113,6 +137,9 @@ namespace WebTestSuite.Suite
                 Console.WriteLine("Exception on TestSuite CleanUp");
             }
         }
+        /// <summary>
+        /// Summaru string detailing results of suite execution
+        /// </summary>
         public string SummaryString
         {
             get
@@ -123,6 +150,9 @@ namespace WebTestSuite.Suite
             }
         }
 
+        /// <summary>
+        /// Pass Fail consolidated string for suite test results
+        /// </summary>
         public string PassFailSummaryString
         {
             get
@@ -133,15 +163,23 @@ namespace WebTestSuite.Suite
             }
         }
 
+        /// <inheritdoc />
         public bool ShowStackTrace { get { return _summary.ShowStackTrace; } set { _summary.ShowStackTrace = value; } }
 
+        /// <inheritdoc />
         public bool Sucessful => !Tests.Any(t => !t.TestResult.Succeeded);
 
-        public void PrintSummaryString()
+        /// <summary>
+        /// Prints Summary string
+        /// </summary>
+        public void PrintSummary()
         {
             Console.WriteLine(SummaryString);
         }
 
+        /// <summary>
+        /// Prints pass fail summary
+        /// </summary>
         public void PrintPassFailSummary()
         {
             Console.WriteLine(PassFailSummaryString);

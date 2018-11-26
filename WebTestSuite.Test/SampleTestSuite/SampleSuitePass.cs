@@ -8,7 +8,7 @@ namespace WebTestSuite.Test.SampleTestSuite
     {
         public SampleSuitePass() : base()
         {
-            this.SuiteDescription.Client = "Sample";
+            this.SuiteDescription.Description = "Sample";
             this.SuiteDescription.SuiteName = "Sample tests";
             this.Tests.Add(new SampleTestPass(new ChromeDriver()));
             this.Tests.Add(new SampleTestPass(new ChromeDriver()));

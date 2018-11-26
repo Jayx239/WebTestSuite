@@ -11,7 +11,7 @@ namespace WebTestSuite.Test
         {
             WebTestSuite.Suite.SuiteDescription suiteDescription = new WebTestSuite.Suite.SuiteDescription("Suite name", "Client");
             Assert.AreEqual(suiteDescription.SuiteName, "Suite name");
-            Assert.AreEqual(suiteDescription.Client, "Client");
+            Assert.AreEqual(suiteDescription.Description, "Client");
         }
     }
 }
