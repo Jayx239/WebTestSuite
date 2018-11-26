@@ -3,10 +3,16 @@ using System.Text;
 
 namespace WebTestSuite
 {
+    /// <summary>
+    /// Test results summary
+    /// </summary>
     public class TestSummary : ITestSummary
     {
+        /// <inheritdoc />
         public List<ITestResult> TestResults { get; set; }
+        /// <inheritdoc />
         public bool ShowStackTrace { get; set; }
+        /// <inheritdoc cref="ITestSummary"/>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -26,6 +32,7 @@ namespace WebTestSuite
             return sb.ToString();
         }
 
+        /// <inheritdoc />
         public string ToPassFailString()
         {
             StringBuilder sb = new StringBuilder();
@@ -37,6 +44,7 @@ namespace WebTestSuite
             return sb.ToString();
         }
 
+        /// <inheritdoc />
         public TestSummary()
         {
             TestResults = new List<ITestResult>();

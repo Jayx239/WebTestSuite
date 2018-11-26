@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WebTestSuite
+﻿namespace WebTestSuite
 {
+    /// <summary>
+    /// Success properties
+    /// </summary>
     public interface ISuccessIndicator
     {
+        /// <summary>
+        /// Indicates whether an operation was successful
+        /// </summary>
         bool Sucessful { get; }
     }
 }

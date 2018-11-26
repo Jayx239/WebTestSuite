@@ -47,10 +47,10 @@ namespace WebTestSuite.Test
         public void TestPrintSummaryString()
         {
             SampleEpicSuite epicSuite = new SampleEpicSuite();
-            epicSuite.PrintSummaryString();
+            epicSuite.PrintSummary();
             epicSuite.CleanUp();
             SampleSuite sampleSuite = new SampleSuite();
-            sampleSuite.PrintSummaryString();
+            sampleSuite.PrintSummary();
             sampleSuite.CleanUp();
         }
         [TestMethod]
@@ -70,7 +70,7 @@ namespace WebTestSuite.Test
             TestSuite testSuite1 = new WebTestSuite.Suite.TestSuite(testSummary);
             Assert.AreEqual(testSummary, testSuite1.Summary);
 
-            WebTestSuite.Suite.SuiteDescription suiteDescription = new WebTestSuite.Suite.SuiteDescription() { Client="client", SuiteName="SuiteName"};
+            WebTestSuite.Suite.SuiteDescription suiteDescription = new WebTestSuite.Suite.SuiteDescription() { Description="client", SuiteName="SuiteName"};
             TestSuite testSuite2 = new WebTestSuite.Suite.TestSuite(testSummary, suiteDescription);
             Assert.AreEqual(testSummary, testSuite2.Summary);
             Assert.AreEqual(suiteDescription, testSuite2.SuiteDescription);

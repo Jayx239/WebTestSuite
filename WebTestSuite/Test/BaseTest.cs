@@ -3,19 +3,33 @@ using WebTestSuite.Exceptions;
 
 namespace WebTestSuite.Test
 {
+    /// <summary>
+    /// Base test class
+    /// </summary>
     public class BaseTest : ITest
     {
+        /// <inheritdoc />
         public bool BreakOnFail { get; set; }
 
+        /// <inheritdoc />
         public ITestResult TestResult { get; set; }
 
+        /// <summary>
+        /// Indicates whether the test succeeded
+        /// </summary>
         public bool Sucessful => TestResult.Succeeded;
 
+        /// <summary>
+        /// Setup tasks to be run before test is run
+        /// </summary>
         public virtual void SetUp()
         {
             
         }
 
+        /// <summary>
+        /// Safe setup, catches exceptions thrown by setup
+        /// </summary>
         private void TrySetUp()
         {
             try
@@ -28,11 +42,17 @@ namespace WebTestSuite.Test
             }
         }
 
+        /// <summary>
+        /// Clean up tasks to be run after each test
+        /// </summary>
         public virtual void CleanUp()
         {
             
         }
 
+        /// <summary>
+        /// Safe cleanup, catches exceptions thrown by cleanup
+        /// </summary>
         private void TryCleanUp()
         {
             try
@@ -45,6 +65,10 @@ namespace WebTestSuite.Test
             }
         }
 
+        /// <summary>
+        /// Executes tests
+        /// </summary>
+        /// <exception cref="FailException"></exception>
         public void Execute()
         {
             TrySetUp();
@@ -95,6 +119,10 @@ namespace WebTestSuite.Test
             TryCleanUp();
         }
 
+        /// <summary>
+        /// Test logic, this should be overriden with test logic
+        /// </summary>
+        /// <returns></returns>
         protected virtual bool TryTest()
         {
             return false;
