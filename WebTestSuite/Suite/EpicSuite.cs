@@ -6,6 +6,9 @@ using WebTestSuite.Exceptions;
 
 namespace WebTestSuite.Suite
 {
+    /// <summary>
+    /// Contains test suites to be executed
+    /// </summary>
     public class EpicSuite : ISummaryPrinter, IBreakable, IStateConfiguration, ISuccessIndicator
     {
 
@@ -41,7 +44,7 @@ namespace WebTestSuite.Suite
                         if (PrintSummaryOnComplete)
                         {
                             PrintPassFailSummary();
-                            PrintSummaryString();
+                            PrintSummary();
                         }
                         
                         throw failEx;
@@ -53,7 +56,7 @@ namespace WebTestSuite.Suite
             if (PrintSummaryOnComplete)
             {
                 PrintPassFailSummary();
-                PrintSummaryString();
+                PrintSummary();
             }
             
             if(BreakOnEnd)
@@ -91,7 +94,7 @@ namespace WebTestSuite.Suite
 
         public bool Sucessful => !Suites.Exists(s=>!s.Sucessful);
 
-        public void PrintSummaryString()
+        public void PrintSummary()
         {
             Console.WriteLine(SummaryString);
         }
