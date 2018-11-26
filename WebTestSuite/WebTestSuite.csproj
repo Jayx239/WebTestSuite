@@ -2,11 +2,18 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net35;net40;net45</TargetFrameworks>
-    <Version>0.0.0-alpha</Version>
+    <Version>0.0.1-alpha</Version>
     <Description>A testing suite for testing UX functionality of web apps.</Description>
     <Copyright>Copyright (c) 2018 Jason Gallagher</Copyright>
     <RepositoryType>Git</RepositoryType>
-    <PackageReleaseNotes>Initial release, barebones selenium test suite.</PackageReleaseNotes>
+    <PackageReleaseNotes>* Added assertion library
+* Added SetUp and CleanUp methods for tests, suites, and epic suites to be run before and after execution.
+* Added WebSuite that contains a driver to be shared between tests.
+* Added PrintSummaryOnComplete method to print test summary when epic suite is complete.
+* Added BreakOnFail methods to allow suites/epics to be broken on a test fail and propagate the exception through the entire epic for better unit test framework support.
+* Added PrintStackTrace attribute to print stack traces in summary when an exception is thrown in a test.
+* Fixed bugs
+Happy Thanksgiving!</PackageReleaseNotes>
     <PackageTags>Selenium Web Test Suite UX Testing App Website Functionality QA Quality Assurance Browser UI</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/Jayx239/WebTestSuite/</PackageProjectUrl>
