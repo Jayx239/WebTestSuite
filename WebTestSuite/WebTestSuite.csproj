@@ -16,7 +16,8 @@
 * Updated comments
 * Renamed PrintSummaryString to PrintSummary
 * Renamed Client to Description in SuiteDescription
-* Fixed bugs</PackageReleaseNotes>
+* Fixed bugs
+* Checkout the example project at https://github.com/Jayx239/WebTestSuiteExample</PackageReleaseNotes>
     <PackageTags>Selenium Web Test Suite UX Testing App Website Functionality QA Quality Assurance Browser UI</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/Jayx239/WebTestSuite/</PackageProjectUrl>
