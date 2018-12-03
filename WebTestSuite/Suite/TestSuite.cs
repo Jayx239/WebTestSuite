@@ -40,7 +40,7 @@ namespace WebTestSuite.Suite
             }
             set { _summary = value; }
         }
-
+        /// <inheritdoc/>
         private ITestSummary _summary;
         public TestSuite()
         {
@@ -96,7 +96,10 @@ namespace WebTestSuite.Suite
         {
 
         }
-        
+
+        /// <summary>
+        /// Safe Set Up that catches exceptions thrown in cleanup method
+        /// </summary>
         private void TrySetUp()
         {
             try
@@ -126,6 +129,10 @@ namespace WebTestSuite.Suite
                 }
             }
         }
+
+        /// <summary>
+        /// Safe Clean Up that catches exceptions thrown in cleanup method
+        /// </summary>
         private void TryCleanUp()
         {
             try

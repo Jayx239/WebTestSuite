@@ -18,15 +18,25 @@ namespace WebTestSuite.Suite
             PrintSummaryOnComplete = true;
             BreakOnFail = false;
         }
-
+        /// <inheritdoc/>
         public bool BreakOnFail { get; set; }
         /// <summary>
         /// Determines whether an exception should be thrown after all tests are ran if one or more suites failed
         /// </summary>
         public bool BreakOnEnd { get; set; }
+        /// <summary>
+        /// Suites to be run on Execute
+        /// </summary>
         public List<ITestSuite> Suites { get; set; }
+        /// <inheritdoc/>
         public bool ShowStackTrace { get { return Suites.Any(s=> s.ShowStackTrace); } set { foreach (TestSuite suite in Suites) { suite.ShowStackTrace = value; } } }
+        /// <summary>
+        /// Indicates whether to print test summary when EpicSuite finishes execution
+        /// </summary>
         public bool PrintSummaryOnComplete { get; set; }
+        /// <summary>
+        /// Executes all suites in the epic
+        /// </summary>
         public void Execute()
         {
             TrySetUp();
@@ -66,6 +76,9 @@ namespace WebTestSuite.Suite
             }
         }
 
+        /// <summary>
+        /// Gets a summary string of the Epic Suite execution result
+        /// </summary>
         public string SummaryString
         {
             get
@@ -79,6 +92,9 @@ namespace WebTestSuite.Suite
             }
         }
 
+        /// <summary>
+        /// Gets a consolidated summary of the Epic Suite execution result
+        /// </summary>
         public string PassFailSummaryString
         {
             get
@@ -92,22 +108,32 @@ namespace WebTestSuite.Suite
             }
         }
 
+        /// <inheritdoc/>
         public bool Sucessful => !Suites.Exists(s=>!s.Sucessful);
-
+        /// <summary>
+        /// Prints a summary string of the Epic Suite execution result
+        /// </summary>
         public void PrintSummary()
         {
             Console.WriteLine(SummaryString);
         }
-
+        /// <summary>
+        /// Prints a consolidated summary of the Epic Suite execution result
+        /// </summary>
         public void PrintPassFailSummary()
         {
             Console.WriteLine(PassFailSummaryString);
         }
-
+        /// <summary>
+        /// Performs Set Up operations for the Epic Suite
+        /// </summary>
         public virtual void SetUp()
         {
             
         }
+        /// <summary>
+        /// Safely runs the Set Up operations for the Epic Suite before execution starts
+        /// </summary>
         private void TrySetUp()
         {
             try
@@ -119,6 +145,9 @@ namespace WebTestSuite.Suite
                 Console.WriteLine("Exception on EpicSuite SetUp");
             }
         }
+        /// <summary>
+        /// Performs the Clean Up operations for the Epic Suite when execution is finished
+        /// </summary>
         public virtual void CleanUp()
         {
             foreach (var suite in Suites)
@@ -133,6 +162,9 @@ namespace WebTestSuite.Suite
                 }
             }
         }
+        /// <summary>
+        /// Safely runs the Clean Up operations for Epic Suite when execution is finished
+        /// </summary>
         private void TryCleanUp()
         {
             try
