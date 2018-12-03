@@ -8,6 +8,9 @@ namespace WebTestSuite.Suite
     /// </summary>
     public class WebSuite : TestSuite
     {
+        /// <summary>
+        /// Web driver that can be shared between tests
+        /// </summary>
         public IWebDriver WebDriver { get; set; }
         
         public WebSuite()
