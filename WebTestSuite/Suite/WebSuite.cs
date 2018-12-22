@@ -26,12 +26,13 @@ namespace WebTestSuite.Suite
         /// Adds test, setting the test WebDriver to this WebDriver if the tests is null
         /// </summary>
         /// <param name="test">Test to be added</param>
-        public void AddTest(WebTest test)
+        public override void AddTest(ITest test)
         {
-            if(test.WebDriver == null)
-            {
-                test.WebDriver = WebDriver;
-            }
+            if(test is WebTest)
+                if(((WebTest) test).WebDriver == null)
+                {
+                    ((WebTest) test).WebDriver = WebDriver;
+                }
             this.Tests.Add(test);
         }
     }

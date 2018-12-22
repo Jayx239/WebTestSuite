@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using WebSuiteTest.Test.SampleTestSuite;
@@ -118,6 +119,39 @@ namespace WebTestSuite.Test
             WebTest driverTest = new WebTest(new ChromeDriver());
             webTestSuite.AddTest(driverTest);
             Assert.AreNotEqual(driverTest, webTestSuite.WebDriver);
+        }
+        [TestMethod]
+        public void TestSuiteSetUpCleanUpError()
+        {
+            StringWriter sw = new StringWriter();
+            Console.SetOut(sw);
+            EpicSuite epicSuite = new EpicSuite();
+            SuiteCleanupException suite = new SuiteCleanupException();
+            epicSuite.Suites.Add(suite);
+            epicSuite.Execute();
+            Assert.IsTrue(sw.ToString().Contains("Exception on TestSuite CleanUp"));
+            Assert.IsTrue(sw.ToString().Contains("Exception on TestSuite SetUp"));
+            Assert.IsFalse(sw.ToString().Contains("Exception on EpicSuite CleanUp"));
+        }
+        [TestMethod]
+        public void TestEpicSuiteSetUpError()
+        {
+
+        }
+        [TestMethod]
+        public void TestTestSetUpCleanUpError()
+        {
+            StringWriter sw = new StringWriter();
+            Console.SetOut(sw);
+            EpicSuite epicSuite = new EpicSuite();
+            TestSuite webSuite = new TestSuite();
+            webSuite.AddTest(new ExceptionTest());
+            epicSuite.Suites.Add(webSuite);
+            epicSuite.Execute();
+            Assert.IsTrue(sw.ToString().Contains("Exception on Test SetUp"));
+            Assert.IsTrue(sw.ToString().Contains("Exception on Test CleanUp"));
+            Assert.IsFalse(sw.ToString().Contains("Exception on TestSuite CleanUp"));
+            Assert.IsFalse(sw.ToString().Contains("Exception on EpicSuite CleanUp"));
         }
 
     }

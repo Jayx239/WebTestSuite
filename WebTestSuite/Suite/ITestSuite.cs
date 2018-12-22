@@ -24,5 +24,11 @@ namespace WebTestSuite.Suite
         /// Execute tests in Tests list
         /// </summary>
         void Execute();
+
+        /// <summary>
+        /// Adds test to suite
+        /// </summary>
+        /// <param name="test">Test to be added</param>
+        void AddTest(ITest test);
     }
 }

@@ -13,5 +13,9 @@ namespace WebTestSuite.Test.SampleTestSuite
         {
             throw new Exception();
         }
+        public override void CleanUp()
+        {
+            throw new Exception();
+        }
     }
 }

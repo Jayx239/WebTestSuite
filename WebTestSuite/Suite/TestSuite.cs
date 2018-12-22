@@ -191,5 +191,11 @@ namespace WebTestSuite.Suite
         {
             Console.WriteLine(PassFailSummaryString);
         }
+
+        /// <inheritdoc />
+        public virtual void AddTest(ITest test)
+        {
+            Tests.Add(test);
+        }
     }
 }
