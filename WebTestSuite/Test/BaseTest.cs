@@ -8,6 +8,21 @@ namespace WebTestSuite.Test
     /// </summary>
     public class BaseTest : ITest
     {
+        public BaseTest()
+        {
+            BreakOnFail = false;
+            TestResult = new TestResult();
+            IsSetUp = false;
+            IsCleanedUp = false;
+            SetUpFailed = false;
+            CleanUpFailed = false;
+        }
+
+        public BaseTest(ITestResult testResult) : base()
+        {
+            TestResult = testResult;
+        }
+
         /// <inheritdoc />
         public bool BreakOnFail { get; set; }
 
@@ -39,7 +54,11 @@ namespace WebTestSuite.Test
             catch (Exception ex)
             {
                 Console.WriteLine("Exception on Test SetUp");
+                SetUpFailed = true;
+                return;
             }
+            IsSetUp = true;
+            SetUpFailed = false;
         }
 
         /// <summary>
@@ -55,6 +74,8 @@ namespace WebTestSuite.Test
         /// </summary>
         private void TryCleanUp()
         {
+            CleanUpFailed = false;
+            IsCleanedUp = true;
             try
             {
                 CleanUp();
@@ -62,6 +83,9 @@ namespace WebTestSuite.Test
             catch(Exception ex)
             {
                 Console.WriteLine("Exception on Test CleanUp");
+                IsCleanedUp = false;
+                CleanUpFailed = true;
+                return;
             }
         }
 
@@ -128,17 +152,20 @@ namespace WebTestSuite.Test
             return false;
         }
 
-        public BaseTest()
-        {
-            BreakOnFail = false;
-            TestResult = new TestResult();
-        }
+        /// <inheritdoc />
+        public bool IsSetUp { get; set; }
 
-        public BaseTest(ITestResult testResult)
-        {
-            BreakOnFail = false;
-            TestResult = testResult;
-        }
+        /// <inheritdoc />
+        public bool IsCleanedUp { get; set; }
+
+        /// <inheritdoc />
+        public bool SetUpFailed { get; set; }
+
+        /// <inheritdoc />
+        public bool CleanUpFailed { get; set; }
+
+        /// <inheritdoc />
+        public bool ShouldCleanUp { get { return !IsCleanedUp && !CleanUpFailed;  } }
 
     }
 }

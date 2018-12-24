@@ -6,7 +6,7 @@ namespace WebTestSuite.Suite
     /// <summary>
     /// Public attributes of test suite
     /// </summary>
-    public interface ITestSuite : ISummaryPrinter, IBreakable, IStateConfiguration, ISuccessIndicator
+    public interface ITestSuite : ISummaryPrinter, IBreakable, IStateConfiguration, ISuccessIndicator, IStateConfigurationStatus
     {
         /// <summary>
         /// Description of suite

@@ -118,7 +118,12 @@ namespace WebTestSuite.Test
             Assert.IsTrue(((WebTest)webTestSuite.Tests[0]).WebDriver == webTestSuite.WebDriver);
             WebTest driverTest = new WebTest(new ChromeDriver());
             webTestSuite.AddTest(driverTest);
-            Assert.AreNotEqual(driverTest, webTestSuite.WebDriver);
+            Assert.AreNotEqual(driverTest.WebDriver, webTestSuite.WebDriver);
+            /* Cleanup drivers */
+            webTestSuite.WebDriver.Close();
+            webTestSuite.WebDriver.Dispose();
+            driverTest.WebDriver.Close();
+            driverTest.WebDriver.Dispose();
         }
         [TestMethod]
         public void TestSuiteSetUpCleanUpError()
@@ -126,7 +131,7 @@ namespace WebTestSuite.Test
             StringWriter sw = new StringWriter();
             Console.SetOut(sw);
             EpicSuite epicSuite = new EpicSuite();
-            SuiteCleanupException suite = new SuiteCleanupException();
+            ExceptionSuite suite = new ExceptionSuite();
             epicSuite.Suites.Add(suite);
             epicSuite.Execute();
             Assert.IsTrue(sw.ToString().Contains("Exception on TestSuite CleanUp"));

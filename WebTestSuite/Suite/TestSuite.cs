@@ -10,7 +10,7 @@ namespace WebTestSuite.Suite
     /// <summary>
     /// Base test suite containing tests
     /// </summary>
-    public class TestSuite : ITestSuite, IStateConfiguration
+    public class TestSuite : ITestSuite
     {
         /// <inheritdoc />
         public bool BreakOnFail { get { return Tests.Exists(r => r.BreakOnFail); } set { foreach (ITest test in Tests) { test.BreakOnFail = value; } } }
@@ -49,6 +49,10 @@ namespace WebTestSuite.Suite
             Tests = new List<ITest>();
             BreakOnFail = false;
             ShowStackTrace = true;
+            IsSetUp = false;
+            IsCleanedUp = false;
+            SetUpFailed = false;
+            CleanUpFailed = false;
         }
         public TestSuite(ITestSummary summary) : base()
         {
@@ -102,6 +106,8 @@ namespace WebTestSuite.Suite
         /// </summary>
         private void TrySetUp()
         {
+            IsSetUp = true;
+            SetUpFailed = false;
             try
             {
                 SetUp();
@@ -109,15 +115,19 @@ namespace WebTestSuite.Suite
             catch (Exception ex)
             {
                 Console.WriteLine("Exception on TestSuite SetUp");
+                SetUpFailed = true;
+                IsSetUp = false;
+                return;
             }
         }
 
         /// <summary>
-        /// Cleanup to be run after all tests in suite execute
+        /// Cleanup to be run after all tests in suite execute, call this base to cleanup all tests in suite if overriden
         /// </summary>
         public virtual void CleanUp()
         {
-            foreach(ITest test in Tests)
+            
+            foreach (ITest test in Tests.Where(t=>t.ShouldCleanUp))
             {
                 try
                 {
@@ -126,6 +136,8 @@ namespace WebTestSuite.Suite
                 catch (Exception ex)
                 {
                     Console.WriteLine("Exception on TestSuite CleanUp");
+                    CleanUpFailed = true;
+                    IsCleanedUp = false;
                 }
             }
         }
@@ -135,6 +147,8 @@ namespace WebTestSuite.Suite
         /// </summary>
         private void TryCleanUp()
         {
+            CleanUpFailed = false;
+            IsCleanedUp = true;
             try
             {
                 CleanUp();
@@ -142,6 +156,8 @@ namespace WebTestSuite.Suite
             catch (Exception ex)
             {
                 Console.WriteLine("Exception on TestSuite CleanUp");
+                CleanUpFailed = true;
+                IsCleanedUp = false;
             }
         }
         /// <summary>
@@ -197,5 +213,20 @@ namespace WebTestSuite.Suite
         {
             Tests.Add(test);
         }
+
+        /// <inheritdoc />
+        public bool IsSetUp { get; set; }
+
+        /// <inheritdoc />
+        public bool IsCleanedUp { get; set; }
+
+        /// <inheritdoc />
+        public bool SetUpFailed { get; set; }
+
+        /// <inheritdoc />
+        public bool CleanUpFailed { get; set; }
+
+        /// <inheritdoc />
+        public bool ShouldCleanUp { get { return !IsCleanedUp && !CleanUpFailed; } }
     }
 }

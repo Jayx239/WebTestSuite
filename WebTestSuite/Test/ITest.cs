@@ -3,7 +3,7 @@
     /// <summary>
     /// Public test attributes
     /// </summary>
-    public interface ITest : IBreakable, IStateConfiguration, ISuccessIndicator
+    public interface ITest : IBreakable, IStateConfiguration, ISuccessIndicator, IStateConfigurationStatus
     {
         /// <summary>
         /// Test result for test

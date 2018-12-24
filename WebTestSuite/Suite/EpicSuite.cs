@@ -9,7 +9,7 @@ namespace WebTestSuite.Suite
     /// <summary>
     /// Contains test suites to be executed
     /// </summary>
-    public class EpicSuite : ISummaryPrinter, IBreakable, IStateConfiguration, ISuccessIndicator
+    public class EpicSuite : ISummaryPrinter, IBreakable, IStateConfiguration, ISuccessIndicator, IStateConfigurationStatus
     {
 
         public EpicSuite()
@@ -17,6 +17,10 @@ namespace WebTestSuite.Suite
             Suites = new List<ITestSuite>();
             PrintSummaryOnComplete = true;
             BreakOnFail = false;
+            IsSetUp = false;
+            IsCleanedUp = false;
+            SetUpFailed = false;
+            CleanUpFailed = false;
         }
         /// <inheritdoc/>
         public bool BreakOnFail { get; set; }
@@ -136,6 +140,8 @@ namespace WebTestSuite.Suite
         /// </summary>
         private void TrySetUp()
         {
+            IsSetUp = false;
+            SetUpFailed = false;
             try
             {
                 SetUp();
@@ -143,14 +149,19 @@ namespace WebTestSuite.Suite
             catch (Exception ex)
             {
                 Console.WriteLine("Exception on EpicSuite SetUp");
+                IsSetUp = false;
+                SetUpFailed = true;
+                return;
             }
+            IsSetUp = true;
+            SetUpFailed = false;
         }
         /// <summary>
         /// Performs the Clean Up operations for the Epic Suite when execution is finished
         /// </summary>
         public virtual void CleanUp()
         {
-            foreach (var suite in Suites)
+            foreach (var suite in Suites.Where(s=>s.ShouldCleanUp))
             {
                 try
                 {
@@ -167,6 +178,8 @@ namespace WebTestSuite.Suite
         /// </summary>
         private void TryCleanUp()
         {
+            IsCleanedUp = false;
+            CleanUpFailed = true;
             try
             {
                 CleanUp();
@@ -174,7 +187,28 @@ namespace WebTestSuite.Suite
             catch (Exception ex)
             {
                 Console.WriteLine("Exception on EpicSuite CleanUp");
+                IsCleanedUp = false;
+                CleanUpFailed = true;
+                return;
             }
+
+            IsCleanedUp = true;
+            CleanUpFailed = false;
         }
+
+        /// <inheritdoc />
+        public bool IsSetUp { get; set; }
+
+        /// <inheritdoc />
+        public bool IsCleanedUp { get; set; }
+
+        /// <inheritdoc />
+        public bool SetUpFailed { get; set; }
+
+        /// <inheritdoc />
+        public bool CleanUpFailed { get; set; }
+        
+        /// <inheritdoc />
+        public bool ShouldCleanUp { get { return !IsCleanedUp && !CleanUpFailed; } }
     }
 }
